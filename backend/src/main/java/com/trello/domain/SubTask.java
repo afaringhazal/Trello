@@ -32,8 +32,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SubTask implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 699079129960234963L;
+//    @Serial
+//    private static final long serialVersionUID = 699079129960234963L;
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -52,12 +52,12 @@ public class SubTask implements Serializable {
     @JsonIgnore
     private Task task;
 
-    // @ManyToOne(fetch = FetchType.LAZY)
-    // @JoinColumn(name = "id",referencedColumnName="id", insertable=false,
-    // updatable=false)
-    // @Column(name="WorkspaceId")
-    // private User assigneeId;
-    @Column(name = "createdAt")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+
+    @Column(name="createdAt")
     private LocalDateTime createdAt;
 
     @Column(name = "updatedAt")

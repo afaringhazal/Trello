@@ -31,10 +31,15 @@ import lombok.Setter;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
+public class User implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 699079129960234963L;
+
     @Id
-    @Column(nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserGenerator")
+    @SequenceGenerator(name = "UserGenerator", allocationSize = 1)
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true)

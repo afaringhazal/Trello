@@ -66,3 +66,5 @@ public class TrelloServiceApplication {
                         : env.getActiveProfiles());
     }
 }
+
+//TODO : check in create operation the id is null!

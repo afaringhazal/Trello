@@ -8,9 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.trello.domain.Task;
 import com.trello.domain.Workspace;
 import com.trello.repository.TaskRepository;
+import com.trello.repository.UserRepository;
 import com.trello.repository.WorkspaceRepository;
 import com.trello.service.TaskService;
 import com.trello.service.dto.TaskDTO;
+import com.trello.service.dto.UserDTO;
 import com.trello.service.mapper.TaskMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +25,13 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
     private final WorkspaceRepository workspaceRepository;
+    private final UserRepository userRepository;
 
-    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper,
-            WorkspaceRepository workspaceRepository) {
+    public TaskServiceImpl(TaskRepository taskRepository, TaskMapper taskMapper, WorkspaceRepository workspaceRepository, UserRepository userRepository) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
         this.workspaceRepository = workspaceRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -52,7 +55,9 @@ public class TaskServiceImpl implements TaskService {
         if (!workspace.isPresent()) {
             throw new IllegalArgumentException("Workspace not found");
         }
-        // TODO : assignee_id must be valid
+        if(taskDTO.getUserId() != null){ // optional
+            userRepository.findById(taskDTO.getUserId()).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        }
 
         Task task = taskMapper.toEntity(taskDTO);
         taskRepository.save(task);

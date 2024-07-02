@@ -45,6 +45,11 @@ public class TaskDTO implements Serializable {
     @JsonProperty("WorkspaceId")
     @NotNull
     private Long workspaceId;
+
+    @JsonProperty("UserId")
+    @NotNull
+    private Long userId;
+
     @JsonProperty("priority")
     private PriorityType priority;
 

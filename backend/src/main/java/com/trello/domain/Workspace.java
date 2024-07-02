@@ -31,8 +31,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class Workspace implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 699079129960234963L;
+//    @Serial
+//    private static final long serialVersionUID = 699079129960234963L;
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
