@@ -1,11 +1,27 @@
 package com.trello.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -28,7 +44,7 @@ public class SubTask implements Serializable {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name="isCompleted")
+    @Column(name = "isCompleted")
     private Boolean isCompleted;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -36,16 +52,15 @@ public class SubTask implements Serializable {
     @JsonIgnore
     private Task task;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id",referencedColumnName="id", insertable=false, updatable=false)
-//    @Column(name="WorkspaceId")
-//    private User assigneeId;
-    @Column(name="createdAt")
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "id",referencedColumnName="id", insertable=false,
+    // updatable=false)
+    // @Column(name="WorkspaceId")
+    // private User assigneeId;
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
-    @Column(name="updatedAt")
+    @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
-
-
 
 }

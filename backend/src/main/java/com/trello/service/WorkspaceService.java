@@ -1,12 +1,10 @@
 package com.trello.service;
 
+import java.util.List;
 
 import com.trello.service.dto.WorkspaceDTO;
 
-import java.util.List;
-
 public interface WorkspaceService {
-
 
     List<WorkspaceDTO> getAllWorkspace();
 

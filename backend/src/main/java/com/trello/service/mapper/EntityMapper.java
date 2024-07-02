@@ -2,7 +2,6 @@ package com.trello.service.mapper;
 
 import java.util.List;
 
-
 public interface EntityMapper<ENTITY, DTO> {
     ENTITY toEntity(DTO dto);
 

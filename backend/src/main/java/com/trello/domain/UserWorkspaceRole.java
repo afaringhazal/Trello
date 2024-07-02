@@ -1,10 +1,17 @@
 package com.trello.domain;
 
-import com.trello.domain.enumeration.RoleType;
-
-import javax.persistence.*;
 import java.io.Serial;
 import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
+
+import com.trello.domain.enumeration.RoleType;
 
 public class UserWorkspaceRole {
     @Serial
@@ -20,26 +27,23 @@ public class UserWorkspaceRole {
     private RoleType role;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id",referencedColumnName="id", insertable=false, updatable=false)
-    @Column(name="WorkspacaId", nullable = false)
+    // @JoinColumn(name = "id",referencedColumnName="id", insertable=false,
+    // updatable=false)
+    @Column(name = "WorkspacaId", nullable = false)
     private Workspace WorkspacaId;
 
-//todo add user
+    // todo add user
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-////    @JoinColumn(name = "id",referencedColumnName="id", insertable=false, updatable=false)
-//    @Column(name="UserId", nullable = false)
-//    private User UserId;
+    // @ManyToOne(fetch = FetchType.LAZY)
+    //// @JoinColumn(name = "id",referencedColumnName="id", insertable=false,
+    // updatable=false)
+    // @Column(name="UserId", nullable = false)
+    // private User UserId;
 
-    @Column(name="createdAt")
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
-    @Column(name="updatedAt")
+    @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
-
-
-
-
-
 
 }

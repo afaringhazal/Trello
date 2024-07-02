@@ -3,8 +3,6 @@ package com.trello.service.mapper;
 import com.trello.domain.Workspace;
 import com.trello.service.dto.WorkspaceDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Mappings;
 
 import java.util.List;
 
