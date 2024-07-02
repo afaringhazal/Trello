@@ -33,6 +33,10 @@ public class SubTaskDTO implements Serializable {
     @NotNull
     private Long taskId;
 
+    @JsonProperty("userId")
+    @NotNull
+    private Long userId;
+
     @JsonProperty("createdAt")
     private LocalDateTime createdAt;
 

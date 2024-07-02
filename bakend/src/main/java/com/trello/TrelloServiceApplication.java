@@ -59,3 +59,5 @@ public class TrelloServiceApplication {
         );
     }
 }
+
+//TODO : check in create operation the id is null!

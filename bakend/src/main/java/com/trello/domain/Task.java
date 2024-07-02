@@ -5,7 +5,6 @@ import com.trello.domain.enumeration.PriorityType;
 import com.trello.domain.enumeration.TaskStatusType;
 import lombok.*;
 import javax.persistence.*;
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -20,8 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class Task implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 699079129960234963L;
+//    @Serial
+//    private static final long serialVersionUID = 699079129960234963L;
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -53,9 +52,11 @@ public class Task implements Serializable {
     @Column(name="priority")
     private PriorityType priority;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "id",referencedColumnName="id", insertable=false, updatable=false)
-//    private User assigneeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
+
     @Column(name="createdAt")
     private LocalDateTime createdAt;
 

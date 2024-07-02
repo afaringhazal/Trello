@@ -5,6 +5,8 @@ import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -40,5 +42,12 @@ public class User implements Serializable {
 
     @Column(name="updatedAt")
     private LocalDateTime updatedAt;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Task> tasks = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<SubTask> subTasks = new HashSet<>();
+
 
 }
