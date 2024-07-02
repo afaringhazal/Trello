@@ -16,17 +16,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class RegisterUserDTO implements Serializable {
     @JsonProperty("username")
-    @NotNull(message = "provide a username")
-    @Pattern(regexp = "[\\w_]+")
+    @NotNull(message = "missing username")
+    @Pattern(regexp = "[\\w_]+", message = "invalid username")
     private String username;
 
     @JsonProperty("email")
-    @NotNull(message = "provide an email")
-    @Pattern(regexp = "[a-zA-Z0-9._+-]+@([a-zA-Z0-9-]+\\.)+[A-Za-z]{2,}")
+    @NotNull(message = "missing email")
+    @Pattern(regexp = "[a-zA-Z0-9._+-]+@([a-zA-Z0-9-]+\\.)+[A-Za-z]{2,}", message = "invalid email")
     private String email;
 
     @JsonProperty("password")
-    @NotNull(message = "provide a password")
-    @Pattern(regexp = "\\w{8,}")
+    @NotNull(message = "missing password")
+    @Pattern(regexp = "\\w{8,}", message = "invalid password, valid password format is `\\w{8,}`")
     private String password;
 }

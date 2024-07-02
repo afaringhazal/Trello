@@ -3,6 +3,7 @@ package com.trello.web.rest;
 import com.trello.domain.User;
 import com.trello.service.AuthService;
 import com.trello.service.JWTService;
+import com.trello.service.dto.LoginUserDTO;
 import com.trello.service.dto.RegisterUserDTO;
 import com.trello.service.responses.LoginResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -29,18 +30,18 @@ public class AuthResource {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@Valid @RequestBody RegisterUserDTO registerUserDTO) {
-        User registeredUser = authService.login(registerUserDTO);
-        return ResponseEntity.ok(registeredUser);
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<LoginResponse> register(@Validated @RequestBody RegisterUserDTO registerUserDTO) {
-        User user = authService.register(registerUserDTO);
-        String jwtToken = jwtService.generateToken(user);
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginUserDTO LoginUserDTO) {
+        User registeredUser = authService.login(LoginUserDTO);
+        String jwtToken = jwtService.generateToken(registeredUser);
         LoginResponse loginResponse = new LoginResponse()
                 .setToken(jwtToken)
                 .setExpiresAt(jwtService.getExpirationTime(jwtToken));
         return ResponseEntity.ok(loginResponse);
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<User> register(@Validated @RequestBody RegisterUserDTO registerUserDTO) {
+        User user = authService.register(registerUserDTO);
+        return ResponseEntity.ok(user);
     }
 }

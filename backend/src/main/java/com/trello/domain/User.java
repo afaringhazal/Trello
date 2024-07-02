@@ -1,27 +1,38 @@
 package com.trello.domain;
 
-import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Getter
 @Setter
-@Table(name = "User")
+@Table(name = "Users")
 @Entity
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable, UserDetails {
+public class User implements UserDetails {
     @Id
-    @Column(name = "id", nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = ", UserGenerator")
-    @SequenceGenerator(name = "UserGenerator", allocationSize = 1, initialValue = 1000)
+    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true)
@@ -33,14 +44,13 @@ public class User implements Serializable, UserDetails {
     @Column(name = "passwordHash", nullable = false)
     private String passwordHash;
 
+    @UpdateTimestamp
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
-
-    @Column(name = "imageURL")
-    private String imageURL;
 
     public User setEmail(String email) {
         this.email = email;
@@ -86,4 +96,9 @@ public class User implements Serializable, UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+	@Override
+	public String getUsername() {
+		return this.username;
+	}
 }

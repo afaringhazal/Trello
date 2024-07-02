@@ -11,9 +11,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -24,21 +25,30 @@ public class ExceptionHandlerAdvice {
 
     @ExceptionHandler(ServiceException.class)
     public ResponseEntity<ErrorResponse> serviceExceptionHandler(ServiceException exception) {
-        log.info(" error code is  : " + exception.getErrorResponse().getErrorCode());
-        log.error(" exception message : " + exception.getErrorResponse().getMessage());
-
+        log.info("error code: " + exception.getErrorResponse().getErrorCode());
+        log.error("exception message: " + exception.getErrorResponse().getMessage());
         return new ResponseEntity<>(exception.getErrorResponse(), exception.getErrorResponse().getStatusCode());
     }
 
-    public ResponseEntity<Map<String, List<String>>> handleValidationErrors(MethodArgumentNotValidException ex) {
-        List<String> errors = ex.getBindingResult().getFieldErrors()
-                .stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
-        return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex) {
+        List<FieldError> fieldErrors = ex.getBindingResult().getFieldErrors();
+        List<Map<String, Object>> errors = new ArrayList<>();
+        List<Object> errorsList = fieldErrors.stream().map(fieldError ->
+                Map.of(
+                        fieldError.getField(),
+                        Optional.ofNullable(fieldError.getDefaultMessage())
+                                .orElse("")
+                )
+        ).collect(Collectors.toUnmodifiableList());
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST.getReasonPhrase(), -1, HttpStatus.BAD_REQUEST);
+        errorResponse.setErrors(errorsList);
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 
-    private Map<String, List<String>> getErrorsMap(List<String> errors) {
-        Map<String, List<String>> errorResponse = new HashMap<>();
-        errorResponse.put("errors", errors);
-        return errorResponse;
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleValidationErrors(IllegalArgumentException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage(), -1, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 }

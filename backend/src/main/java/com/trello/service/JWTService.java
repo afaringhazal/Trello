@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class JWTService {
     @Value("${security.jwt.secret-key}")
     private String secretKey;
+    @Value("${security.jwt.expiration-time}")
     private Long expiration;
 
     private Claims parseClaim(String token) {
