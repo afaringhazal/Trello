@@ -1,5 +1,6 @@
 package com.trello.domain;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -31,7 +32,7 @@ import lombok.Setter;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class User implements UserDetails {
 
     @Serial
     private static final long serialVersionUID = 699079129960234963L;
