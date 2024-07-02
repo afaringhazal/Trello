@@ -43,9 +43,8 @@ public class JWTService {
     }
 
     public String generateToken(UserDetails user) {
-        HashMap extraClaims = new HashMap();
         return Jwts.builder()
-                .setClaims(extraClaims)
+                .setClaims(new HashMap<String, Object>())
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + this.expiration))

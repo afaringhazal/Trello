@@ -1,12 +1,10 @@
 package com.trello.web.rest;
 
-import com.trello.domain.User;
-import com.trello.service.AuthService;
-import com.trello.service.JWTService;
-import com.trello.service.dto.LoginUserDTO;
-import com.trello.service.dto.RegisterUserDTO;
-import com.trello.service.responses.LoginResponse;
-import lombok.extern.slf4j.Slf4j;
+import javax.validation.Valid;
+
+import org.springframework.http.HttpCookie;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import com.trello.domain.User;
+import com.trello.service.AuthService;
+import com.trello.service.JWTService;
+import com.trello.service.dto.LoginUserDTO;
+import com.trello.service.dto.RegisterUserDTO;
+import com.trello.service.responses.LoginResponse;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
@@ -36,7 +41,12 @@ public class AuthResource {
         LoginResponse loginResponse = new LoginResponse()
                 .setToken(jwtToken)
                 .setExpiresAt(jwtService.getExpirationTime(jwtToken));
-        return ResponseEntity.ok(loginResponse);
+        HttpCookie jwt = ResponseCookie
+                .from("jwt", jwtToken)
+                .path("/")
+                .httpOnly(true)
+                .build();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwt.toString()).body(loginResponse);
     }
 
     @PostMapping("/register")
