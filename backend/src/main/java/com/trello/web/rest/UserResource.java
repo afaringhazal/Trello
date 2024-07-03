@@ -4,6 +4,8 @@ import com.trello.service.dto.UserDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
@@ -17,6 +19,12 @@ public class UserResource {
 
     public UserResource(UserService userService) {
         this.userService= userService;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> me(@AuthenticationPrincipal UserDetails userDetails) {
+
+        return new ResponseEntity<>(userService.getByUsername(userDetails.getUsername()), HttpStatus.OK);
     }
 
     @GetMapping("/user")
