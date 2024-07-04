@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-    Optional<Task> findByWorkspace(Long workspaceId);
+    Optional<Task> findByWorkspaceId(Long workspaceId);
 }

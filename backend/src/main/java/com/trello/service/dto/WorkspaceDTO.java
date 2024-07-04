@@ -1,5 +1,6 @@
 package com.trello.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,8 +19,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class WorkspaceDTO implements Serializable {
 
-    private static final long serialVersionUID = -7990216963349610621L;
-
     @JsonProperty("id")
     private Long id;
 
@@ -36,8 +35,7 @@ public class WorkspaceDTO implements Serializable {
     @JsonProperty("updatedAt")
     private LocalDateTime updatedAt;
 
-    @NotNull
-    @Valid
     @JsonProperty("tasks")
+    @JsonIgnore
     private Set<TaskDTO> tasks;
 }

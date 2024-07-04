@@ -35,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
+        if(userDTO.getId()!=null){
+            throw new IllegalArgumentException("User id must be null");
+        }
         if(userDTO.getUsername().isBlank()){
             throw new IllegalArgumentException("Username cannot be empty or null");
         }

@@ -1,5 +1,6 @@
 package com.trello.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.trello.domain.enumeration.PriorityType;
 import com.trello.domain.enumeration.TaskStatusType;
@@ -20,8 +21,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class TaskDTO implements Serializable {
 
-    private static final long serialVersionUID = -7990216963349610621L;
-
     @JsonProperty("id")
     private Long id;
 
@@ -35,18 +34,20 @@ public class TaskDTO implements Serializable {
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("createdAt")
+    @JsonProperty("estimatedTime")
     private LocalDateTime estimatedTime;
-    @JsonProperty("createdAt")
+
+    @JsonProperty("actualTime")
     private LocalDateTime actualTime;
-    @JsonProperty("createdAt")
+
+    @JsonProperty("dueDate")
     private LocalDateTime dueDate;
 
-    @JsonProperty("WorkspaceId")
+    @JsonProperty("workspaceId")
     @NotNull
     private Long workspaceId;
 
-    @JsonProperty("UserId")
+    @JsonProperty("userId")
     @NotNull
     private Long userId;
 
@@ -62,8 +63,7 @@ public class TaskDTO implements Serializable {
     @JsonProperty("imageURL")
     private String imageURL;
 
-    @NotNull
-    @Valid
-    @JsonProperty("tasks")
+    @JsonProperty("subTasks")
+    @JsonIgnore
     private Set<SubTaskDTO> subTasks;
 }

@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/sub_task")
 @Slf4j
 public class SubTaskResource {
     private final SubTaskService subTaskService;
@@ -26,31 +26,30 @@ public class SubTaskResource {
     }
 
 
-    @GetMapping("/sub_tasks/{taskId}")
+    @GetMapping("/by_task_id/{taskId}")
     public ResponseEntity<List<SubTaskDTO>> getSubTasksByTaskId(@PathVariable(name = "taskId") Long taskId) {
 
         return new ResponseEntity<>(subTaskService.getSubTasksByTaskId(taskId), HttpStatus.OK);
     }
 
-    @PostMapping("/sub_task")
+    @PostMapping
     public ResponseEntity<SubTaskDTO> createWorkspace(@RequestBody @Valid SubTaskDTO subTaskDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(subTaskService.createSubTask(subTaskDTO));
     }
 
-    @GetMapping("/sub_task/{subTaskId}")
+    @GetMapping("/{subTaskId}")
     public ResponseEntity<SubTaskDTO> getBySubTaskId(@PathVariable(name = "subTaskId") Long subTaskId) {
-
         return new ResponseEntity<>(subTaskService.getBySubTaskId(subTaskId), HttpStatus.OK);
     }
 
 
-    @PutMapping("/sub_task/{subTaskId}")
+    @PutMapping("/{subTaskId}")
     public ResponseEntity<WorkspaceDTO> updateWorkspace(@PathVariable(name = "subTaskId") Long subTaskId, @RequestBody @Valid SubTaskDTO subTaskDTO){
         subTaskService.UpdateSubTask(subTaskDTO, subTaskId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping("/sub_task/{subTaskId}")
+    @DeleteMapping("/{subTaskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long subTaskId) {
         subTaskService.deleteById(subTaskId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

@@ -17,7 +17,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class SubTaskDTO implements Serializable {
 
-    private static final long serialVersionUID = -7990216963349610621L;
 
     @JsonProperty("id")
     private Long id;

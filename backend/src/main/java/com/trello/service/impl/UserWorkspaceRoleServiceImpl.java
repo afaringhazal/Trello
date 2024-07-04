@@ -101,4 +101,17 @@ public class UserWorkspaceRoleServiceImpl implements UserWorkspaceRoleService {
         }
         userWorkspaceRoleRepository.deleteById(new UserWorkspaceRole.UserWorkspaceRolePK(workspaceId, userId));
     }
+
+    @Override
+    public UserWorkspaceRole get(Long workspaceId, Long userId) {
+        if(workspaceId == null){
+            throw new IllegalArgumentException("workspace id is null!");
+        }
+        if(userId == null){
+            throw new IllegalArgumentException("user id is null");
+        }
+        UserWorkspaceRole userWorkspaceRoleNotFound = userWorkspaceRoleRepository.findById(new UserWorkspaceRole.UserWorkspaceRolePK(userId, workspaceId)).
+                orElseThrow(() -> new IllegalArgumentException("UserWorkspaceRole not found"));
+        return userWorkspaceRoleNotFound;
+    }
 }
