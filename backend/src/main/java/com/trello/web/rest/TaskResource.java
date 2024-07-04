@@ -20,7 +20,7 @@ import com.trello.service.dto.WorkspaceDTO;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/task")
 @Slf4j
 public class TaskResource {
     private final TaskService taskService;
@@ -29,31 +29,30 @@ public class TaskResource {
         this.taskService = taskService;
     }
 
-    @GetMapping("/task/{workspaceId}")
+    @GetMapping("/by_workspace_id/{workspaceId}")
     public ResponseEntity<TaskDTO> getTasksByWorkspaceId(@PathVariable(name = "workspaceId") Long workspaceId) {
 
         return new ResponseEntity<>(taskService.getTasksByWorkspaceId(workspaceId), HttpStatus.OK);
     }
 
-    @PostMapping("/task")
+    @PostMapping
     public ResponseEntity<TaskDTO> createWorkspace(@RequestBody @Valid TaskDTO taskDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(taskDTO));
     }
 
-    @GetMapping("/task/{taskId}")
+    @GetMapping("/by_task_id/{taskId}")
     public ResponseEntity<TaskDTO> getByTaskId(@PathVariable(name = "taskId") Long taskId) {
-
         return new ResponseEntity<>(taskService.getByTaskId(taskId), HttpStatus.OK);
     }
 
-    @PutMapping("/task/{taskId}")
+    @PutMapping("/{taskId}")
     public ResponseEntity<WorkspaceDTO> updateWorkspace(@PathVariable(name = "taskId") Long taskId,
             @RequestBody @Valid TaskDTO taskDTO) {
-        taskService.Updatetask(taskDTO, taskId);
+        taskService.updateTask(taskDTO, taskId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @DeleteMapping("/task/{taskId}")
+    @DeleteMapping("/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long taskId) {
         taskService.deleteById(taskId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

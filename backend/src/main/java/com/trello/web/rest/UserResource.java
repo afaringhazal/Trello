@@ -34,12 +34,12 @@ public class UserResource {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<UserDTO> createWorkspace(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO userDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDTO));
     }
 
     @GetMapping("/user/{username}")
-    public ResponseEntity<UserDTO> getByTaskId(@PathVariable(name = "username") String username) {
+    public ResponseEntity<UserDTO> getByUsername(@PathVariable(name = "username") String username) {
 
         return new ResponseEntity<>(userService.getByUsername(username), HttpStatus.OK);
     }

@@ -1,7 +1,7 @@
 package com.trello.service.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.trello.domain.enumeration.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,28 +11,23 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubTaskDTO implements Serializable {
+public class UserWorkspaceRoleDTO implements Serializable {
 
+    private static final long serialVersionUID = -7990216963349610621L;
 
-    @JsonProperty("id")
-    private Long id;
+    @JsonProperty("role")
+    private RoleType role;
 
-    @JsonProperty("title")
+    @JsonProperty("WorkspaceId")
     @NotNull
-    private String title;
+    private Long workspaceId;
 
-    @JsonProperty("isCompleted")
-    private Boolean isCompleted;
-
-    @JsonProperty("taskId")
-    @NotNull
-    private Long taskId;
-
-    @JsonProperty("userId")
+    @JsonProperty("UserId")
     @NotNull
     private Long userId;
 
@@ -41,4 +36,5 @@ public class SubTaskDTO implements Serializable {
 
     @JsonProperty("updatedAt")
     private LocalDateTime updatedAt;
+
 }

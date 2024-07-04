@@ -5,7 +5,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 
 import com.trello.domain.User;
 import com.trello.repository.UserRepository;
@@ -14,6 +13,8 @@ import com.trello.service.dto.LoginUserDTO;
 import com.trello.service.dto.RegisterUserDTO;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @Service
@@ -38,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
                 .setEmail(registerUserDTO.getEmail())
                 .setUsername(registerUserDTO.getUsername())
                 .setPasswordHash(passwordEncoder.encode(registerUserDTO.getPassword()));
+        user.setCreatedAt(LocalDateTime.now());
         return userRepository.save(user);
     }
 

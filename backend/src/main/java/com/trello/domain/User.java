@@ -54,12 +54,10 @@ public class User implements UserDetails {
     private String passwordHash;
 
     @JsonIgnore
-    @UpdateTimestamp
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
     @JsonIgnore
-    @UpdateTimestamp
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
 

@@ -10,11 +10,9 @@ import java.util.List;
 public interface WorkspaceMapper extends EntityMapper<Workspace, WorkspaceDTO> {
 
     @Override
-//    @Mapping(source = "accountCode", target = "account.code")
     Workspace toEntity(WorkspaceDTO workspaceDTO);
 
     @Override
-//    @Mapping(source = "account.code", target = "accountCode")
     WorkspaceDTO toDTO(Workspace workspace);
 
     @Override
