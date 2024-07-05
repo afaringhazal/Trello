@@ -10,17 +10,12 @@ import {
   Box,
 } from '@mui/material'
 
-import React, { useEffect, useState } from 'react'
-import { axios } from '@/utils'
-import { AxiosError } from 'axios'
-import moment from 'moment'
-
-import { useRouter } from 'next/navigation'
-import { User } from '@/types/user'
+import React, { useContext, useState } from 'react'
 
 import Edit from './edit'
 import UserInfo from './user'
 import UserCards from './cards'
+import { Context } from '@/context/AppContext'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -30,15 +25,7 @@ interface TabPanelProps {
 
 export default function Profile() {
   const [alertError, setAlertError] = useState<string>('')
-  const [userInfo, setUserInfo] = useState<User>()
-
-  const router = useRouter()
-
-  useEffect(() => {
-    getMe().then((data) => {
-      setUserInfo(data)
-    })
-  }, [])
+  const { user: userInfo } = useContext(Context)
 
   const [value, setValue] = useState(0)
 
@@ -79,18 +66,6 @@ export default function Profile() {
       )}
     </>
   )
-
-  async function getMe(): Promise<User | undefined> {
-    try {
-      return (await axios.get('/me')).data
-    } catch (e: AxiosError | any) {
-      if (e.response?.status === 401) {
-        router.push('/auth-login')
-        return
-      }
-      setAlertError(e.response?.data?.message || e.message)
-    }
-  }
 }
 
 function CustomTabPanel(props: TabPanelProps) {

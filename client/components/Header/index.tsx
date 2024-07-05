@@ -15,13 +15,14 @@ import {
 } from '@mui/material'
 import AdbIcon from '@mui/icons-material/Adb'
 import MenuIcon from '@mui/icons-material/Menu'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { User } from '@/types/user'
+import { Context } from '@/context/AppContext'
 
-export default function Header({ pages, user }: { pages: { title: string, href: string }[], user: User | undefined }) {
+export default function Header({ pages }: { pages: { title: string, href: string }[] }) {
 	const router = useRouter()
+	const { user } = useContext(Context)
 
 	const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
 	const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)

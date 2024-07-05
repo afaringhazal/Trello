@@ -20,14 +20,28 @@ import {
 import DeveloperBoard from '@mui/icons-material/DeveloperBoard'
 import DesignServices from '@mui/icons-material/DesignServices'
 import Home from '@mui/icons-material/Home'
-import { Workspace } from '@/types/workspace'
 
-const mainPanels = [{ name: 'Boards', icon: DeveloperBoard }, { name: 'Templates', icon: DesignServices }, { name: 'Home', icon: Home }]
-const workspaces: Workspace[] = []
+import { Workspace } from '@/types/workspace'
+import { useEffect, useState } from 'react';
+import { axios } from '@/utils';
+import { AxiosError } from 'axios';
+
+import Boards from '@/components/Boards';
+
+const mainPanels = [
+  { name: 'Boards', icon: DeveloperBoard, component: Boards },
+  { name: 'Templates', icon: DesignServices },
+  { name: 'Home', icon: Home }
+]
 
 const drawerWidth = 440
 
 export default function Workspaces() {
+  const [workspaces, setWorkspaces] = useState<Workspace[]>()
+  const [selectedPane, setSelectedPane] = useState<React.ReactNode>(Boards)
+  useEffect(() => {
+    getWorkspaces().then(setWorkspaces)
+  }, [])
   return (
     <Container>
       <Box sx={{ display: 'flex' }}>
@@ -55,7 +69,7 @@ export default function Workspaces() {
             <List>
               {mainPanels?.map(panel => (
                 <ListItem key={panel.name} disablePadding>
-                  <ListItemButton>
+                  <ListItemButton onClick={() => setSelectedPane(panel.component)}>
                     <ListItemIcon>
                       <panel.icon />
                     </ListItemIcon>
@@ -71,12 +85,13 @@ export default function Workspaces() {
               }
             >
               {workspaces?.map((ws) => (
-                <ListItem key={ws.href} disablePadding>
+                <ListItem key={ws.id} disablePadding>
                   <ListItemButton>
                     {/* <ListItemIcon> */}
                     {/*   {index % 2 === 0 ? <DeveloperBoard /> : <DesignServices />} */}
                     {/* </ListItemIcon> */}
-                    <ListItemText primary={ws.name} />
+                    {ws.name}
+                    <ListItemText primary={ws.id} />
                   </ListItemButton>
                 </ListItem>
               ))}
@@ -85,11 +100,16 @@ export default function Workspaces() {
         </Drawer>
         <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <Toolbar />
-          <Typography paragraph>
-            Lorem ipsum
-          </Typography>
+          {selectedPane}
         </Box>
       </Box>
     </Container>
-  );
+  )
+  async function getWorkspaces(): Promise<Workspace[] | undefined> {
+    try {
+      return (await axios.get('/workspace')).data
+    } catch (e: AxiosError | any) {
+      console.log(e, 'when getting workspaces')
+    }
+  }
 }
