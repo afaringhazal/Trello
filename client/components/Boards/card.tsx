@@ -10,8 +10,8 @@ const cardImageHeight = 140
 const cardMaxWidth = 345
 
 export default function BoardCard({ title, description, actionButton }: {
-  title: string,
-  description: string,
+  title: string | undefined,
+  description: string | undefined,
   actionButton: React.JSX.Element | undefined
 }) {
   const [imageURL, setImageURL] = React.useState<any>()

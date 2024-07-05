@@ -30,11 +30,11 @@ import Boards from '@/components/Boards';
 
 const mainPanels = [
   { name: 'Boards', icon: DeveloperBoard, component: Boards },
-  { name: 'Templates', icon: DesignServices },
-  { name: 'Home', icon: Home }
+  { name: 'Templates', icon: DesignServices, component: <h1>Templates</h1> },
+  { name: 'Home', icon: Home, component: <h1>Home</h1> }
 ]
 
-const drawerWidth = 440
+const drawerWidth = 240
 
 export default function Workspaces() {
   const [workspaces, setWorkspaces] = useState<Workspace[]>()
@@ -61,15 +61,14 @@ export default function Workspaces() {
             '& .MuiPaper-root': {
               position: 'relative'
             },
-
           }}
         >
           <Toolbar />
           <Box sx={{ overflow: 'auto' }}>
             <List>
               {mainPanels?.map(panel => (
-                <ListItem key={panel.name} disablePadding>
-                  <ListItemButton onClick={() => setSelectedPane(panel.component)}>
+                <ListItem key={panel.name} disablePadding onClick={() => setSelectedPane(panel?.component)}>
+                  <ListItemButton>
                     <ListItemIcon>
                       <panel.icon />
                     </ListItemIcon>
@@ -87,9 +86,6 @@ export default function Workspaces() {
               {workspaces?.map((ws) => (
                 <ListItem key={ws.id} disablePadding>
                   <ListItemButton>
-                    {/* <ListItemIcon> */}
-                    {/*   {index % 2 === 0 ? <DeveloperBoard /> : <DesignServices />} */}
-                    {/* </ListItemIcon> */}
                     {ws.name}
                     <ListItemText primary={ws.id} />
                   </ListItemButton>
@@ -109,7 +105,7 @@ export default function Workspaces() {
     try {
       return (await axios.get('/workspace')).data
     } catch (e: AxiosError | any) {
-      console.log(e, 'when getting workspaces')
+      console.log(e, 'error getting workspaces')
     }
   }
 }
