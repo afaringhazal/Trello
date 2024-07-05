@@ -10,6 +10,10 @@ import { useEffect, useState } from "react";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter()
     const [userInfo, setUserInfo] = useState<User>()
+    const pages = [
+        { title: 'Workspaces', href: '/workspaces' },
+        { title: 'Create', href: '/create-workspace' },
+    ]
 
     useEffect(() => {
         getMe().then(setUserInfo)
@@ -18,6 +22,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     return (
         <>
             <Header
+                pages={pages}
                 user={userInfo}
             />
             {children}
@@ -28,7 +33,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         try {
             return (await axios.get('/me')).data
         } catch (e: AxiosError | any) {
-            if (e.response?.status === 401) {
+            if ([401, 403].includes(e.response?.status)) {
                 router.push('/auth-login')
                 return
             }

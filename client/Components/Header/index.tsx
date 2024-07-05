@@ -20,12 +20,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { User } from '@/types/user'
 
-const pages = [
-	{ title: 'Workspaces', href: '/workspaces' },
-	{ title: 'Create', href: '/create-workspace' },
-]
-
-export default function Header({ user }: { user: User | undefined }) {
+export default function Header({ pages, user }: { pages: { title: string, href: string }[], user: User | undefined }) {
 	const router = useRouter()
 
 	const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
@@ -48,7 +43,6 @@ export default function Header({ user }: { user: User | undefined }) {
 
 	const settings = ['Profile', 'Logout']
 	const settingsActions = [() => { router.push('/dashboard/profile') }, handleCloseUserMenu]
-
 
 	return (
 		<AppBar position='static'>
