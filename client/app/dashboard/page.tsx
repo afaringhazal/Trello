@@ -1,12 +1,12 @@
 'use client'
 
-import Workspaces from './workspaces/page'
 import DashboardLayout from './layout'
+import Workspaces from './workspaces/page'
 
 export default function Home() {
-    return (
-      <DashboardLayout>
-        <Workspaces />
-      </DashboardLayout>
-    )
+  return (
+    <DashboardLayout>
+      <Workspaces />
+    </DashboardLayout>
+  )
 }

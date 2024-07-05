@@ -1,6 +1,6 @@
 'use client'
 
-import Header from "@/Components/Header";
+import Header from "@/components/Header";
 import { User } from "@/types/user";
 import { axios } from "@/utils";
 import { AxiosError } from "axios";
