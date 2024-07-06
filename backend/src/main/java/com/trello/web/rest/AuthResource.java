@@ -49,7 +49,7 @@ public class AuthResource {
         return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwt.toString()).body(loginResponse);
     }
 
-    @PostMapping("/register")
+    @PostMapping("/signup")
     public ResponseEntity<User> register(@Validated @RequestBody RegisterUserDTO registerUserDTO) {
         User user = authService.register(registerUserDTO);
         return ResponseEntity.ok(user);
