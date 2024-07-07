@@ -31,12 +31,11 @@ public class TaskResource {
 
     @GetMapping("/by_workspace_id/{workspaceId}")
     public ResponseEntity<TaskDTO> getTasksByWorkspaceId(@PathVariable(name = "workspaceId") Long workspaceId) {
-
         return new ResponseEntity<>(taskService.getTasksByWorkspaceId(workspaceId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<TaskDTO> createWorkspace(@RequestBody @Valid TaskDTO taskDTO) {
+    public ResponseEntity<TaskDTO> createTask(@RequestBody @Valid TaskDTO taskDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(taskService.createTask(taskDTO));
     }
 
